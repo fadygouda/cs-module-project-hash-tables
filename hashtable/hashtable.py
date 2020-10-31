@@ -118,21 +118,19 @@ class HashTable:
         index = self.hash_index(key)
         entry = self.storage[index]
         prev_entry = None
-
         if entry is not None:
             while entry.next != None and entry.key != key:
                 prev_entry = entry
                 entry = entry.next
-
         if entry.key == key:
             if prev_entry is None:
-                entry = entry.next
+                self.storage[index] = entry.next
             else:
                 prev_entry.next = entry.next
-                self.items -= 1
-                self.resizeIfNeeded()
+            self.items -= 1
+            self.resizeIfNeeded()
             return
-
+        
     def get(self, key):
         """
         Retrieve the value stored with the given key.
